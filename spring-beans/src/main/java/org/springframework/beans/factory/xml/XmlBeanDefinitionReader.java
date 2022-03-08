@@ -331,6 +331,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 		}
 
 		try (InputStream inputStream = encodedResource.getResource().getInputStream()) {
+			// SAX 解析 XML 的 entity
 			InputSource inputSource = new InputSource(inputStream);
 			if (encodedResource.getEncoding() != null) {
 				inputSource.setEncoding(encodedResource.getEncoding());
@@ -387,7 +388,9 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 			throws BeanDefinitionStoreException {
 
 		try {
+			// 包含 XML 文件中的所有信息，接下来需要转换为 BeanDefinition
 			Document doc = doLoadDocument(inputSource, resource);
+			// 注册 BeanDefinition 的个数
 			int count = registerBeanDefinitions(doc, resource);
 			if (logger.isDebugEnabled()) {
 				logger.debug("Loaded " + count + " bean definitions from " + resource);
@@ -507,8 +510,11 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
 	 */
 	public int registerBeanDefinitions(Document doc, Resource resource) throws BeanDefinitionStoreException {
 		BeanDefinitionDocumentReader documentReader = createBeanDefinitionDocumentReader();
+		// 注册 XML 中 BeanDefinition 前 BeanDefinition 的个数
 		int countBefore = getRegistry().getBeanDefinitionCount();
+		// 注册 BeanDefinition
 		documentReader.registerBeanDefinitions(doc, createReaderContext(resource));
+		// 注册后的个数
 		return getRegistry().getBeanDefinitionCount() - countBefore;
 	}
 

@@ -68,6 +68,9 @@ public class XmlBeanFactory extends DefaultListableBeanFactory {
 	}
 
 	/**
+	 * Spring 允许一个工程中有多个 Spring 工厂
+	 * 如 SpringMVC 中的父子容器
+	 *
 	 * Create a new XmlBeanFactory with the given input stream,
 	 * which must be parsable using DOM.
 	 * @param resource the XML resource to load bean definitions from
