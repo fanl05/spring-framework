@@ -329,7 +329,7 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 						bdHolder.getBeanName() + "'", ele, ex);
 			}
 			// Send registration event.
-			// 空实现，扩展点，可以监听该事件完成一些操作
+			// 空实现，预留埋点，可以监听该事件完成一些操作
 			getReaderContext().fireComponentRegistered(new BeanComponentDefinition(bdHolder));
 		}
 	}

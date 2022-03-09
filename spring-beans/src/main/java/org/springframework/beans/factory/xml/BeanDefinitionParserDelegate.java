@@ -1389,6 +1389,7 @@ public class BeanDefinitionParserDelegate {
 	}
 
 	/**
+	 * 解析自定义标签核心方法
 	 * Parse a custom element (outside of the default namespace).
 	 * @param ele the element to parse
 	 * @param containingBd the containing bean definition (if any)
@@ -1396,15 +1397,18 @@ public class BeanDefinitionParserDelegate {
 	 */
 	@Nullable
 	public BeanDefinition parseCustomElement(Element ele, @Nullable BeanDefinition containingBd) {
+		// e.g. http://www.spring.ryland.com/schema/stu
 		String namespaceUri = getNamespaceURI(ele);
 		if (namespaceUri == null) {
 			return null;
 		}
+		// 通过 spring.handlers 获取自定义标签对应的 Handler
 		NamespaceHandler handler = this.readerContext.getNamespaceHandlerResolver().resolve(namespaceUri);
 		if (handler == null) {
 			error("Unable to locate Spring NamespaceHandler for XML schema namespace [" + namespaceUri + "]", ele);
 			return null;
 		}
+		// 调用 init 方法解析标签
 		return handler.parse(ele, new ParserContext(this.readerContext, this, containingBd));
 	}
 

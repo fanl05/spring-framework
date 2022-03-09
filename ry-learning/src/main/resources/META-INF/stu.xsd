@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+		targetNamespace="http://www.spring.ryland.com/schema/stu"
+		xmlns:tns="http://www.spring.ryland.com/schema/stu"
+		elementFormDefault="qualified">
+
+	<element name="stu">
+		<complexType>
+			<attribute name="id" type="int"/>
+			<attribute name="name" type="string"/>
+		</complexType>
+
+	</element>
+</schema>

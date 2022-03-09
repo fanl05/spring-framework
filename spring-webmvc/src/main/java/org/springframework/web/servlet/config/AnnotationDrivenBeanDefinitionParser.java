@@ -177,6 +177,9 @@ class AnnotationDrivenBeanDefinitionParser implements BeanDefinitionParser {
 	private static final boolean gsonPresent;
 
 	static {
+		// 使用 @ResponseBody 后会将 Controller 中接口的返回值转换为对象
+		// 在 POM 文件中引入了哪一种 JSON 库就会使用哪一种进行转换
+		// 默认支持 jackson 和 gson
 		ClassLoader classLoader = AnnotationDrivenBeanDefinitionParser.class.getClassLoader();
 		javaxValidationPresent = ClassUtils.isPresent("javax.validation.Validator", classLoader);
 		romePresent = ClassUtils.isPresent("com.rometools.rome.feed.WireFeed", classLoader);

@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   					   http://www.springframework.org/schema/beans/spring-beans.xsd
+	    				   http://www.springframework.org/schema/mvc
+	     				   https://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
 	<bean id="ry" name="u1,u2,u3" class="com.ryland.spring.entity.User">
 		<property name="name" value="ryland"/>
@@ -9,5 +12,7 @@
 	</bean>
 
 	<alias name="ry" alias="u"/>
+
+	<mvc:annotation-driven/>
 
 </beans>

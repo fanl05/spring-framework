@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:mvc="http://www.springframework.org/schema/mvc"
+	   xmlns:ry="http://www.spring.ryland.com/schema/stu"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   					   http://www.springframework.org/schema/beans/spring-beans.xsd
+	    				   http://www.springframework.org/schema/mvc
+	     				   https://www.springframework.org/schema/mvc/spring-mvc.xsd
+						   http://www.spring.ryland.com/schema/stu
+						   http://www.spring.ryland.com/schema/stu.xsd">
+
+	<ry:stu id="1" name="ryland"/>
+
+</beans>

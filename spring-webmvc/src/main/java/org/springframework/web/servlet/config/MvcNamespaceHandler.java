@@ -29,6 +29,9 @@ import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
  */
 public class MvcNamespaceHandler extends NamespaceHandlerSupport {
 
+	/**
+	 * 每一个子标签对应一个解析器
+	 */
 	@Override
 	public void init() {
 		registerBeanDefinitionParser("annotation-driven", new AnnotationDrivenBeanDefinitionParser());
