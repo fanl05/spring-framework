@@ -1,7 +1,10 @@
 package com.ryland.spring;
 
+import com.ryland.spring.config.ProductConfig;
 import com.ryland.spring.dao.UserDao;
 import com.ryland.spring.entity.Goods;
+import com.ryland.spring.entity.Product;
+import com.ryland.spring.entity.Stu;
 import com.ryland.spring.entity.User;
 import com.ryland.spring.service.UserService;
 import com.ryland.spring.service.UserServiceImpl;
@@ -12,6 +15,8 @@ import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 
@@ -90,11 +95,75 @@ public class CreateObjects {
 		log.debug("[{}]", user);
 	}
 
+	/**
+	 * 以 & 开头且不是 FactoryBean
+	 * 抛出 BeanIsNotAFactoryException
+	 */
 	@Test
 	public void demo07() {
 		XmlBeanFactory beanFactory = new XmlBeanFactory(new ClassPathResource("applicationContext06.xml"));
-		User user = (User) beanFactory.getBean("u2");
+		User user = (User) beanFactory.getBean("&u2");
 		log.debug("[{}]", user);
+	}
+
+	/**
+	 * 父子容器问题
+	 * 实战中的父子容器：SpringMVC
+	 * child: DispatcherServlet
+	 * root: ContextLoaderListener
+	 * <p>
+	 * 若有相同配置，以子容器为准
+	 */
+	@Test
+	public void demo08() {
+		// 父容器
+		DefaultListableBeanFactory parent = new DefaultListableBeanFactory();
+		XmlBeanDefinitionReader definitionReader1 = new XmlBeanDefinitionReader(parent);
+		definitionReader1.loadBeanDefinitions(new ClassPathResource("applicationContext-parent.xml"));
+
+		// 子容器
+		DefaultListableBeanFactory child = new DefaultListableBeanFactory(parent);
+		XmlBeanDefinitionReader definitionReader2 = new XmlBeanDefinitionReader(child);
+		definitionReader2.loadBeanDefinitions(new ClassPathResource("applicationContext-child.xml"));
+
+		// 建立联系，父子容器的信息会容器
+		Stu stu = child.getBean(Stu.class);
+		log.debug("[{}]", stu);
+	}
+
+	/**
+	 * 抽象 bean
+	 * 基本不使用
+	 */
+	@Test
+	public void demo09() {
+		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+		ClassPathResource resource = new ClassPathResource("applicationContext07.xml");
+		XmlBeanDefinitionReader beanDefinitionReader = new XmlBeanDefinitionReader(beanFactory);
+		beanDefinitionReader.loadBeanDefinitions(resource);
+		Stu stu = (Stu) beanFactory.getBean("ry");
+		beanFactory.getBean("ry");
+		log.debug("[{}]", stu);
+	}
+
+	/**
+	 * 基于注解属性注入
+	 */
+	@Test
+	public void demo10() {
+		ApplicationContext applicationContext = new AnnotationConfigApplicationContext(ProductConfig.class);
+		Product product = (Product) applicationContext.getBean("product");
+		log.debug("[{}]", product);
+	}
+
+	/**
+	 * Autowird 注解使用
+	 */
+	@Test
+	public void test11() {
+		ApplicationContext applicationContext = new AnnotationConfigApplicationContext(ProductConfig.class);
+		Product product = (Product) applicationContext.getBean("product");
+		log.debug("[{}]", product);
 	}
 
 }
