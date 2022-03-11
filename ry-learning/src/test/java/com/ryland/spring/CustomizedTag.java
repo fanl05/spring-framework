@@ -17,7 +17,10 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  * 6. applicationContext.xml 定义标签
  * 7. 从工厂中获取自定义标签中定义的对象
  *
- * NOTE: 自定义标签创建的对象必须包含 id 属性
+ * NOTE:
+ * 1. xsi:schemaLocation 映射 spring.schema
+ * 2. xmlns:xxx 映射 spring.handlers
+ * 3. 自定义标签创建的对象必须包含 id 属性
  *
  * @author Ryland
  */
@@ -28,7 +31,9 @@ public class CustomizedTag {
 	public void demo01() {
 		ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext02.xml");
 		Stu stu = applicationContext.getBean(Stu.class);
+		Stu stu2 = (Stu) applicationContext.getBean("1");
 		log.debug("[{}]", stu);
+		log.debug("[{}]", stu2);
 	}
 
 }
