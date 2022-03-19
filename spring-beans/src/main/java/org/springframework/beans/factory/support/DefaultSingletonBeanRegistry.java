@@ -61,7 +61,7 @@ import org.springframework.util.StringUtils;
  * (which inherit from it). Can alternatively also be used as a nested
  * helper to delegate to.
  *
- * @author Juergen Hoeller
+ * @author Juergen Hoellerh
  * @since 2.0
  * @see #registerSingleton
  * @see #registerDisposableBean
@@ -267,6 +267,7 @@ public class DefaultSingletonBeanRegistry extends SimpleAliasRegistry implements
 					if (recordSuppressedExceptions) {
 						this.suppressedExceptions = null;
 					}
+					// 创建后检查
 					afterSingletonCreation(beanName);
 				}
 				// 放入单例池

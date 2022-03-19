@@ -287,6 +287,9 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 	public Object postProcessAfterInitialization(@Nullable Object bean, String beanName) {
 		if (bean != null) {
 			Object cacheKey = getCacheKey(bean.getClass(), beanName);
+			// 在使用 ObjectFactory 创建代理对象时会将原始对象放入 earlyProxyReferences
+			// 此时将其与传入的 bean 对比，若相同则证明代理对象已经存在于 earlySingletonObjects 中
+			// 这种情况下就不需要再次进行代理，直接返回原始对象
 			if (this.earlyProxyReferences.remove(cacheKey) != bean) {
 				return wrapIfNecessary(bean, beanName, cacheKey);
 			}

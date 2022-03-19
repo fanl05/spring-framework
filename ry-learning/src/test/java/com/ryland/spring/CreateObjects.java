@@ -2,10 +2,8 @@ package com.ryland.spring;
 
 import com.ryland.spring.config.ProductConfig;
 import com.ryland.spring.dao.UserDao;
-import com.ryland.spring.entity.Goods;
-import com.ryland.spring.entity.Product;
-import com.ryland.spring.entity.Stu;
-import com.ryland.spring.entity.User;
+import com.ryland.spring.entity.*;
+import com.ryland.spring.service.ProductService;
 import com.ryland.spring.service.UserService;
 import com.ryland.spring.service.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -158,12 +156,36 @@ public class CreateObjects {
 
 	/**
 	 * Autowird 注解使用
+	 * 基于 AutowiredAnnotationBeanPostProcessor 完成
 	 */
 	@Test
-	public void test11() {
+	public void demo11() {
 		ApplicationContext applicationContext = new AnnotationConfigApplicationContext(ProductConfig.class);
 		Product product = (Product) applicationContext.getBean("product");
 		log.debug("[{}]", product);
 	}
+
+	/**
+	 * 引用类型注入
+	 */
+	@Test
+	public void demo12() {
+		DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+		XmlBeanDefinitionReader beanDefinitionReader = new XmlBeanDefinitionReader(beanFactory);
+		beanDefinitionReader.loadBeanDefinitions(new ClassPathResource("applicationContext08.xml"));
+		Item item = (Item) beanFactory.getBean("item");
+		log.debug("[{}]", item);
+	}
+
+	/**
+	 * aop
+	 */
+	@Test
+	public void demo13() {
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext09.xml");
+		ProductService productService = (ProductService) ctx.getBean("productService");
+		productService.sell("phone");
+	}
+
 
 }
